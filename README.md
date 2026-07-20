@@ -5,7 +5,7 @@ Prepares data for [SpatialView](https://github.com/kendziorski-lab/SpatialView) 
 SpatialViewR can be installed using 
 
 ```r
-remotes::install_github("kendziorski-lab/SpatialviewR")
+remotes::install_github("kendziorski-lab/SpatialViewR")
 ```
 
 ### Usage
