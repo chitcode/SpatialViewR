@@ -494,7 +494,7 @@ prepare10xVisium_from_seurat <- function(seuratObj,
     # Step 5
     # normalized_counts <- seuratObj.temp@assays$Spatial@data
     normalized_counts <-
-      Seurat::GetAssayData(seuratObj.temp, slot = slot, assay = assayName)
+      Seurat::GetAssayData(seuratObj.temp, layer = slot, assay = assayName)
     colnames(normalized_counts) <-
       stringr::str_split(colnames(normalized_counts),
                          pattern = multiSamplePattern,
@@ -1033,13 +1033,13 @@ prepare10xVisium_from_SpatialExperiment <- function(speObj,
                          pattern = multiSamplePattern,
                          simplify = TRUE)[, 1]
 
-    if (!is.null(dimPlot) & stringr::str_to_upper(dimPlot) %in% stringr::str_to_upper(reducedDimNames(seuratObj.temp))) {
-      existing.reductions <- reducedDimNames(seuratObj.temp)
+    if (!is.null(dimPlot) & stringr::str_to_upper(dimPlot) %in% stringr::str_to_upper(reducedDimNames(speObj.temp))) {
+      existing.reductions <- reducedDimNames(speObj.temp)
 
       reductions.df <- NULL
       for (r in existing.reductions) {
         if (stringr::str_to_upper(dimPlot) == stringr::str_to_upper(r)) {
-          reductions.df <- reducedDim(seuratObj.temp, type = r)
+          reductions.df <- reducedDim(speObj.temp, type = r)
           break
         }
       }
@@ -1051,7 +1051,7 @@ prepare10xVisium_from_SpatialExperiment <- function(speObj,
       metadata[paste0(dimPlot, "_2")] <- reductions.df[,2]
 
     }else{
-      warning(paste(dimPlot, "is not present in the Seurat object. You may choose from available reductions", reducedDimNames(seuratObj.temp)))
+      warning(paste(dimPlot, "is not present in the Seurat object. You may choose from available reductions", reducedDimNames(speObj.temp)))
       metadata[,paste0(dimPlot, "_1")] <- 0
       metadata[,paste0(dimPlot, "_2")] <- 0
     }
