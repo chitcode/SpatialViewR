@@ -202,8 +202,18 @@ prepare10xVisium_from_seurat <- function(seuratObj,
   for (i in seq_along(seurat.idents)) {
     sel.ident <- seurat.idents[i]
     data.path <- dataPaths[i]
+    # subset() on Seurat objects with spatial FOV/Centroids sub-objects emits
+    # harmless "Not validating ... objects" warnings (Seurat skips a slow
+    # validation pass); suppress those specifically so they don't drown out
+    # warnings that actually matter.
     seuratObj.temp <-
-      subset(seuratObj, subset = orig.ident == sel.ident)
+      withCallingHandlers(
+        subset(seuratObj, subset = orig.ident == sel.ident),
+        warning = function(w) {
+          if (inherits(w, "validationWarning"))
+            invokeRestart("muffleWarning")
+        }
+      )
 
     ## step 0
     # create the export directory
