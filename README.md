@@ -5,7 +5,7 @@ Prepares data for [SpatialView](https://github.com/kendziorski-lab/SpatialView) 
 SpatialViewR can be installed using 
 
 ```r
-remotes::install_github("kendziorski-lab/SpatialViewR")
+remotes::install_github("chitcode/SpatialViewR")
 ```
 
 ### Usage
@@ -19,7 +19,7 @@ Please follow
 
 1. Can I change the web port?
 
-Yes. Port number 8878 is default port in the *prepare10x_from_seurat* and *prepare10x_from_SpatialExperiment* functions in [SpatialViewR](https://github.com/kendziorski-lab/SpatialViewR) package. You can pass a different port number in these functions.
+Yes. Port number 8878 is default port in the *prepare10x_from_seurat* and *prepare10x_from_SpatialExperiment* functions in [SpatialViewR](https://github.com/chitcode/SpatialViewR) package. You can pass a different port number in these functions.
 
 2. Once a port is used, I get 'port in use' error on my next run.
 

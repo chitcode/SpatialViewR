@@ -35,7 +35,7 @@ Tutorial for [SpatialView using SpatialExperiment](SpatialView_Tutorial_Using_Sp
 ```{r setup, eval=FALSE}
 
 #Install SpatialViewR if not yet installed.
-remotes::install_github("kendziorski-lab/SpatialViewR")
+remotes::install_github("chitcode/SpatialViewR")
 
 library(stringr)
 library(purrr)

@@ -46,7 +46,7 @@ klippy::klippy(position = c("top", "right"))
 
 ```{r setup, eval=FALSE}
 #Install SpatialViewR if not yet installed.
-remotes::install_github("kendziorski-lab/SpatialViewR")
+remotes::install_github("chitcode/SpatialViewR")
 
 library(stringr)
 library(dplyr)
