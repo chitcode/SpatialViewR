@@ -25,11 +25,8 @@
 #' If TRUE (default), downloads SpatialView from the GitHub repository,
 #' and runs the SpatialView application on a local computer.
 #'
-#' When TRUE, the updated SpatialView files are downloaded from GitHub (spatialviewRepo URL).
-#' To download the files, SpatialViewR uses the 'wget' utility. The 'wget' package is pre-installed on most Linux distributions.
-#' For Mac, see \link{https://stackoverflow.com/questions/33886917/how-to-install-wget-in-macos}
-#'
-#' For Windows, see   \link{https://gnuwin32.sourceforge.net/packages/wget.htm}
+#' When TRUE, the updated SpatialView files are downloaded from GitHub (spatialviewRepo URL)
+#' using R's built-in libcurl support, so no external download utility is required.
 #'
 #' When downloadRepo set to FALSE, SpatialView files may be downloaded manually from the GitHub repository
 #' \link{https://github.com/kendziorski-lab/spatialview/archive/refs/tags/spatialview-latest.zip}
@@ -120,7 +117,7 @@ prepare10xVisium_from_seurat <- function(seuratObj,
       download.file2(
         url = paste0(spatialviewRepo, spatialviewVersion, '.zip'),
         destfile = file.path(exportPath, paste0(projectName, ".zip")),
-        method = "wget",
+        method = "libcurl",
         cacheOK = FALSE,
         quiet = verbose
       ),
@@ -619,11 +616,8 @@ prepare10xVisium_from_seurat <- function(seuratObj,
 #' If TRUE (default), downloads SpatialView from the GitHub repository
 #' and runs the SpatialView application on a local computer.
 #'
-#' When TRUE, the updated SpatialView files are downloaded from GitHub (spatialviewRepo URL).
-#' To download the files, SpatialViewR uses the 'wget' utility. The 'wget' package is pre-installed on most Linux distributions.
-#' For Mac, see \link{https://stackoverflow.com/questions/33886917/how-to-install-wget-in-macos}
-#'
-#' For Windows, see   \link{https://gnuwin32.sourceforge.net/packages/wget.htm}
+#' When TRUE, the updated SpatialView files are downloaded from GitHub (spatialviewRepo URL)
+#' using R's built-in libcurl support, so no external download utility is required.
 #'
 #' When 'downloadRepo' set to FALSE, SpatialView files may be downloaded manually from the GitHub repository
 #' \link{https://github.com/kendziorski-lab/spatialview/archive/refs/tags/spatialview-latest.zip}
@@ -715,7 +709,7 @@ prepare10xVisium_from_SpatialExperiment <- function(speObj,
       download.file2(
         url = paste0(spatialviewRepo, spatialviewVersion, '.zip'),
         destfile = file.path(exportPath, paste0(projectName, ".zip")),
-        method = "wget",
+        method = "libcurl",
         cacheOK = FALSE,
         quiet = verbose
       ),
@@ -1218,21 +1212,20 @@ start.httpserver <- function(path, port = NULL, verbose = FALSE) {
 download.file2 <-
   function(url,
            destfile,
-           method,
+           method = "libcurl",
            quiet = FALSE,
-           mode = "w",
+           mode = "wb",
            cacheOK = TRUE,
            extra = getOption("download.file.extra"),
            headers = NULL,
            ...) {
-    if (quiet)
-      extra <- c(extra, "--quiet")
-    system(paste(
-      "wget",
-      paste(extra, collapse = " "),
-      shQuote(url),
-      "-O",
-      shQuote(path.expand(destfile))
-    ))
-
+    utils::download.file(
+      url = url,
+      destfile = path.expand(destfile),
+      method = method,
+      quiet = quiet,
+      mode = mode,
+      cacheOK = cacheOK,
+      headers = headers
+    )
   }
